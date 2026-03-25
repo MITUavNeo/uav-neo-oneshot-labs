@@ -48,7 +48,6 @@ def reset():
 
     ###### END PUT CODE HERE #########
     ##################################
-    pass
 
 
 def _get(drone):
@@ -83,7 +82,7 @@ def update(drone):
     Hints (Phase 1 — yaw turn):
         err = _yaw_err(_target_yaw, cur)
         if |err| < YAW_THRESH → stop, _phase = 2
-        else → yaw PCMD: send_pcmd(0, 0, clamp(err/45, -YAW_SPEED, YAW_SPEED), 0)
+        else → yaw PCMD: send_pcmd(0, 0, max(-YAW_SPEED, min(YAW_SPEED, err/45)), 0)
 
     Hints (Phase 2 — post-turn advance 0.8 s):
         send_pcmd(FLY_SPEED, 0, 0, 0)

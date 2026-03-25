@@ -8,7 +8,7 @@ Each gate entry: (forward_distance_m, target_altitude_m)
 Algorithm:
     • Dead-reckoning: _fwd += vel[2] * dt  each frame
     • For each gate: fly forward at FLY_SPEED while holding target altitude
-      (throttle = clamp(ALT_KP × altitude_error, -MAX_THROTTLE, MAX_THROTTLE))
+      (throttle = max(-MAX_THROTTLE, min(MAX_THROTTLE, ALT_KP * altitude_error)))
     • When _fwd reaches the gate's distance → move to next gate
     • When all gates cleared → return True
 
@@ -53,7 +53,6 @@ def reset():
 
     ###### END PUT CODE HERE #########
     ##################################
-    pass
 
 
 def update(drone):
@@ -73,7 +72,7 @@ def update(drone):
         if remaining <= ARRIVAL_MARGIN:
             → print cleared, update _leg_start_fwd and _gate_idx
         else:
-            throttle = clamp(ALT_KP * err_alt, -MAX_THROTTLE, MAX_THROTTLE)
+            throttle = max(-MAX_THROTTLE, min(MAX_THROTTLE, ALT_KP * err_alt))
             drone.flight.send_pcmd(FLY_SPEED, 0, 0, throttle)
 
         Check _gate_idx >= len(GATE_WAYPOINTS) → all done, return True

@@ -71,7 +71,6 @@ def reset():
 
     ###### END PUT CODE HERE #########
     ##################################
-    pass
 
 
 def _yaw_err(t, c):
@@ -101,7 +100,7 @@ def update(drone):
         except: img = drone.camera.get_color_image()
         Find contour; compute err_x = cx - IMAGE_CX, err_y = cy - IMAGE_CY
         If |err_x| < CENTRE_THRESHOLD and |err_y| < CENTRE_THRESHOLD → _phase = 3
-        Else: roll = clamp(err_x/IMAGE_CX, ...); pitch = clamp(err_y/IMAGE_CY, ...)
+        Else: roll = max(-MAX_ROLL, min(MAX_ROLL, err_x/IMAGE_CX)); pitch = max(-MAX_PITCH, min(MAX_PITCH, err_y/IMAGE_CY))
               drone.flight.send_pcmd(pitch, roll, 0, 0)
 
     Hints (Phase 3 — land):

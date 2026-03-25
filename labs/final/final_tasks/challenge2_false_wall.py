@@ -47,7 +47,6 @@ def reset():
 
     ###### END PUT CODE HERE #########
     ##################################
-    pass
 
 
 def _yaw_error(target, current):
