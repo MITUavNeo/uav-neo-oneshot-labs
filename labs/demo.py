@@ -1,11 +1,10 @@
 """
-MIT BWSI Autonomous UAV Neo
-MIT License
-uavneo-outreach-labs
+MIT BWSI Autonomous Drone Racing Course - UAV Neo
+GNU General Public License v3.0
 
 File Name: demo.py
 
-Title: Demo Drone program
+Title: Demo Drone Program
 
 Purpose: To verify that basic drone functions work properly and the student has set up
 the system correctly to run Python scripts with the drone start/update paradigm in the
@@ -21,9 +20,6 @@ Expected Outcome: Terminal output and drone movement occurs when buttons are pre
 # Imports
 ########################################################################################
 
-import sys
-
-sys.path.insert(0, '../library')
 import drone_core
 
 ########################################################################################
@@ -40,7 +36,7 @@ isFlying = False
 # Functions
 ########################################################################################
 
-# [FUNCTION] The start function is run once every time the start button is pressed
+# [FUNCTION] start() is run once when the simulation begins
 def start():
     # If we use a global variable in our function, we must list it at
     # the beginning of our function like this
@@ -54,9 +50,7 @@ def start():
     # This tells the drone to begin at a standstill
     drone.flight.stop()
 
-# [FUNCTION] After start() is run, this function is run once every frame (ideally at
-# 60 frames per second or slower depending on processing speed) until the back button
-# is pressed
+# [FUNCTION] update() is called once every frame (~60 fps)
 def update():
 
     global counter
@@ -92,14 +86,8 @@ def update():
             drone.flight.land()
             isFlying = False
 
-# [FUNCTION] update_slow() is similar to update() but is called once per second by
-# default. It is especially useful for printing debug messages, since printing a
-# message every frame in update is computationally expensive and creates clutter
+# [FUNCTION] update_slow() is called once per second — useful for debug prints
 def update_slow():
-    """
-    After start() is run, this function is run at a constant rate that is slower
-    than update().  By default, update_slow() is run once per second
-    """
     # This prints a message every time that the right bumper is pressed during
     # a call to to update_slow.  If we press and hold the right bumper, it
     # will print a message once per second
@@ -108,7 +96,7 @@ def update_slow():
 
 
 ########################################################################################
-# DO NOT MODIFY: Register start and update and begin execution
+# DO NOT MODIFY: Register callbacks and begin execution
 ########################################################################################
 
 if __name__ == "__main__":

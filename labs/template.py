@@ -1,7 +1,6 @@
 """
-MIT BWSI Autonomous RACECAR
-MIT License
-racecar-neo-outreach-labs
+MIT BWSI Autonomous Drone Racing Course - UAV Neo
+GNU General Public License v3.0
 
 File Name: template.py << [Modify with your own file name!]
 
@@ -19,18 +18,14 @@ the script.]
 # Imports
 ########################################################################################
 
-import sys
-
-# If this file is nested inside a folder in the labs folder, the relative path should
-# be [1, ../../library] instead.
-sys.path.insert(0, '../library')
-import racecar_core
+import drone_core
+# import drone_utils  # uncomment when you need helpers from drone_utils
 
 ########################################################################################
 # Global variables
 ########################################################################################
 
-rc = racecar_core.create_racecar()
+drone = drone_core.create_drone()
 
 # Declare any global variables here
 
@@ -39,27 +34,25 @@ rc = racecar_core.create_racecar()
 # Functions
 ########################################################################################
 
-# [FUNCTION] The start function is run once every time the start button is pressed
+# [FUNCTION] start() is run once when the simulation begins
 def start():
-    pass # Remove 'pass' and write your source code for the start() function here
+    pass  # Remove 'pass' and write your source code for start() here
 
-# [FUNCTION] After start() is run, this function is run once every frame (ideally at
-# 60 frames per second or slower depending on processing speed) until the back button
-# is pressed  
+
+# [FUNCTION] update() is called once every frame (~60 fps)
 def update():
-    pass # Remove 'pass' and write your source code for the update() function here
+    pass  # Remove 'pass' and write your source code for update() here
 
-# [FUNCTION] update_slow() is similar to update() but is called once per second by
-# default. It is especially useful for printing debug messages, since printing a 
-# message every frame in update is computationally expensive and creates clutter
+
+# [FUNCTION] update_slow() is called once per second — useful for debug prints
 def update_slow():
-    pass # Remove 'pass and write your source code for the update_slow() function here
+    pass  # Remove 'pass' and write your source code for update_slow() here
 
 
 ########################################################################################
-# DO NOT MODIFY: Register start and update and begin execution
+# DO NOT MODIFY: Register callbacks and begin execution
 ########################################################################################
 
 if __name__ == "__main__":
-    rc.set_start_update(start, update, update_slow)
-    rc.go()
+    drone.set_start_update(start, update, update_slow)
+    drone.go()
