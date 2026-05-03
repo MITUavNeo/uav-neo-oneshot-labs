@@ -1,7 +1,6 @@
 """
-MIT BWSI Autonomous UAV Neo
-MIT License
-uavneo-outreach-labs
+MIT BWSI Autonomous Drone Racing Course - UAV Neo
+GNU General Public License v3.0
 
 File Name: test_core.py
 
@@ -14,11 +13,13 @@ Purpose: A simple program which can be used to manually test drone_core function
 # Imports
 ########################################################################################
 
-import sys
+import sys, os
+_HERE = os.path.dirname(os.path.abspath(__file__))
 
-sys.path.insert(1, "../library")
+sys.path.insert(0, os.path.join(_HERE, '../library'))
+sys.path.insert(0, os.path.join(_HERE, '../../uav-neo-library/library'))
 import drone_core
-import drone_utils as rc_utils
+import drone_utils as uav_utils
 
 ########################################################################################
 # Global variables
@@ -71,7 +72,7 @@ def start():
         "    A button = Display forward color image\n"
         "    B button = Display downward color image\n"
         "    X button = Display depth image\n"
-        "    Y button = Display sensor data (IMU, GPS, altitude, attitude)\n"
+        "    Y button = Display sensor data (IMU, altitude, attitude)\n"
     )
 
 
@@ -145,24 +146,22 @@ def update():
     elif drone.controller.is_down(drone.controller.Button.X):
         depth_image = drone.camera.get_depth_image()
         drone.display.show_depth_image(depth_image)
-        depth_center_distance = rc_utils.get_depth_image_center_distance(depth_image)
+        depth_center_distance = uav_utils.get_depth_image_center_distance(depth_image)
         print(f"Depth center distance: [{depth_center_distance:.2f}] cm")
 
-    # Y button: Display all sensor data (IMU, GPS, altitude, attitude)
+    # Y button: Display all sensor data (IMU, altitude, attitude)
     if drone.controller.is_down(drone.controller.Button.Y):
         a = drone.physics.get_linear_acceleration()
         v = drone.physics.get_linear_velocity()
         w = drone.physics.get_angular_velocity()
         alt = drone.physics.get_altitude()
         att = drone.physics.get_attitude()
-        gps = drone.physics.get_gps()
         print(
             f"Accel: ({a[0]:6.2f},{a[1]:6.2f},{a[2]:6.2f}) m/s^2  "
             f"Vel: ({v[0]:6.2f},{v[1]:6.2f},{v[2]:6.2f}) m/s  "
             f"Gyro: ({w[0]:5.2f},{w[1]:5.2f},{w[2]:5.2f}) rad/s\n"
             f"Altitude: {alt:6.2f} m  "
-            f"Attitude: (P:{att[0]:6.1f}, R:{att[1]:6.1f}, Y:{att[2]:6.1f}) deg  "
-            f"GPS: ({gps[0]:.6f}, {gps[1]:.6f}, {gps[2]:.1f})"
+            f"Attitude: (P:{att[0]:6.1f}, R:{att[1]:6.1f}, Y:{att[2]:6.1f}) deg"
         )
 
 
@@ -178,7 +177,7 @@ def update_slow():
 
 
 ########################################################################################
-# DO NOT MODIFY: Register start and update and begin execution
+# DO NOT MODIFY: Register callbacks and begin execution
 ########################################################################################
 
 if __name__ == "__main__":
